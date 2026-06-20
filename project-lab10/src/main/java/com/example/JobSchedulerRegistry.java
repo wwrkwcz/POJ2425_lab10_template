@@ -18,11 +18,11 @@ public class JobSchedulerRegistry extends Thread{
     public static JobSchedulerRegistry getInstance(){return instance;}
 
 
-//    List<JobScheduler> schedulers = new ArrayList<>();
+    List<JobScheduler> schedulers = new ArrayList<>();
 
-//    public void register(JobScheduler scheduler) {
-//        schedulers.add(scheduler);
-//    }
+    public void register(JobScheduler scheduler) {
+        schedulers.add(scheduler);
+    }
 
     @Override
     public void run() {
@@ -34,12 +34,12 @@ public class JobSchedulerRegistry extends Thread{
             /**
              * tworzę event (zdarzenie) zmiany czasu
              */
-//            TimeEvent event = new TimeEvent();
-//            event.setTime(LocalDateTime.now());
+            TimeEvent event = new TimeEvent();
+            event.setTime(LocalDateTime.now());
             /**
              * Przechodzę przez wszystkie zadeklarowane harmonogramy (JobSchedulery)
              */
-//            for (JobScheduler scheduler : new ArrayList<>(schedulers)){
+            for (JobScheduler scheduler : new ArrayList<>(schedulers)){
                 /**
                  * każdy harmonogram (JobScheduler) jest obserwatorem
                  * na zdarzenia zmiany czasu.
@@ -48,8 +48,8 @@ public class JobSchedulerRegistry extends Thread{
                  * SimpleJobScheduler tak oby, scheduler był 'świadomy'
                  * jaka godzina wybiła i w razie potrzeby uruchomił joba na oddzielnym wątku
                  */
-//                scheduler.listenTo(event);
-//            }
+                scheduler.listenTo(event);
+            }
             try{
                     Thread.sleep(100);
             }

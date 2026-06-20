@@ -18,7 +18,7 @@ public class MainProgram {
          * Dodajmy teraz klasę o nazwie 'ShowTimeJob',
          * która w konstruktorze będzie przyjmować czas który będzie niedługo wyświetlać
          */
-//        ShowTimeJob showTimeJob = new ShowTimeJob(event.getTime());
+        ShowTimeJob showTimeJob = new ShowTimeJob(event.getTime());
 
         /**
          * Utwórz nowy interfejs o nazwie 'Job'
@@ -29,9 +29,9 @@ public class MainProgram {
          * Niech klasa ShowTimeJob implentuje ten interfejs,
          * tak aby metoda 'run' na ekranie konsoli wyświetlała czas podany w konstruktorze
          */
-//        Job job = (Job)showTimeJob;
-//        job.run();
-//        showTimeJob.setJobTime(LocalDateTime.now().plusSeconds(4));
+        Job job = (Job)showTimeJob;
+        job.run();
+        showTimeJob.setJobTime(LocalDateTime.now().plusSeconds(4));
 
         /**
          * Teraz utwórz klasę dziedziczącą po klasie Thread,
@@ -40,14 +40,14 @@ public class MainProgram {
          *
          * Metodą 'start' uruchomi joba na oddzielnym wątku (wzięte z klasy thread)
          */
-//        Thread jobThread = new JobThread(job);
-//        jobThread.start();
+        Thread jobThread = new JobThread(job);
+        jobThread.start();
 
         /**
          * Utwórz nowy rodzaj Joba - 'DescribedJob',
          * gdzie w postaci napisu dajemy opis co ma się wydarzyć
          */
-//        Job jobWithDescription = new DescribedJob("Wykonuje zadanie");
+        Job jobWithDescription = new DescribedJob("Wykonuje zadanie");
 
         /**
          * Utwórz nowy interfejs o nazwie 'JobScheduler'
@@ -59,15 +59,15 @@ public class MainProgram {
          * klasa SimpleJobScheduler jest implementacją powyższego interfejsu,
          * za pomocą której tworzymy dwa różne harmonogramy zadań dla dwóch różnych job'ów
          */
-//        JobScheduler scheduler = new SimpleJobScheduler();
-//        scheduler.forJob(jobWithDescription)
-//                .startsAt(LocalDateTime.now().plusSeconds(5))
-//                .everySeconds(1)
-//                .repeatTimes(5);
-//
-//        JobScheduler shedulerForTimeShow = new SimpleJobScheduler()
-//                .forJob(showTimeJob)
-//                .everySeconds(1);
+        JobScheduler scheduler = new SimpleJobScheduler();
+        scheduler.forJob(jobWithDescription)
+                .startsAt(LocalDateTime.now().plusSeconds(5))
+                .everySeconds(1)
+                .repeatTimes(5);
+
+        JobScheduler shedulerForTimeShow = new SimpleJobScheduler()
+                .forJob(showTimeJob)
+                .everySeconds(1);
 
         /**
          * klasa 'JobSchedulerRegistry'
@@ -75,11 +75,11 @@ public class MainProgram {
          * zadań. Dziedziczy po klasie Thread i na oddzielnym wątku zaczyna pracować.
          * Dalej spójrz do implementacji klasy 'JobSchedulerRegistry'
          */
-//        JobSchedulerRegistry schedule = JobSchedulerRegistry.getInstance();
-//
-//        schedule.register(scheduler);
-//        schedule.register(shedulerForTimeShow);
-//        schedule.start();
+        JobSchedulerRegistry schedule = JobSchedulerRegistry.getInstance();
+
+        schedule.register(scheduler);
+        schedule.register(shedulerForTimeShow);
+        schedule.start();
 
     }
 }
